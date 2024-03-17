@@ -21,6 +21,28 @@ class Pion:
     #methods 
     def move_right(self,increment):
         if self.right<3:
+            if(self.up==1):
+                self.move_down(increment)
+            if(self.down==1):
+                self.move_up(increment)
+            if(self.up==2):
+                self.move_up(increment)
+            if(self.down==2):
+                self.move_down(increment)
+            if(self.up==3 and self.right==1):
+                self.setY(self.getY()+increment*2)
+                self.setX(self.getX()+increment)
+                self.right=2
+                self.up=1
+                self.left=-2
+                self.down=-1
+            if(self.down==3 and self.right==1):
+                self.setY(self.getY()-increment*2)
+                self.setX(self.getX()+increment)
+                self.right=2
+                self.up=-1
+                self.left=-2
+                self.down=1
             self.setX(self.getX()+increment)
             self.right+=1
             self.left-=1
@@ -29,6 +51,28 @@ class Pion:
 
     def move_left(self,increment):
         if self.left<3:
+            if (self.up==1) :
+                self.move_down(increment)
+            if (self.down==1) :
+                self.move_up(increment)
+            if(self.up==2):
+                self.move_up(increment)
+            if(self.down==2):
+                self.move_down(increment)
+            if(self.up==3 and self.left==1):
+                self.setY(self.getY()+increment*2)
+                self.setX(self.getX()-increment)
+                self.left=2
+                self.up=1
+                self.right=-2
+                self.down=-1
+            if (self.down==3 and self.left==1):
+                self.setY(self.getY()-increment*2)
+                self.setX(self.getX()-increment)
+                self.right=-2
+                self.up=-1
+                self.left=2
+                self.down=1
             self.setX(self.getX()-increment)
             self.left+=1
             self.right-=1
@@ -37,6 +81,24 @@ class Pion:
 
     def move_up(self,increment):
         if self.up<3:
+            if (self.up==0 or self.down==3) and (self.right==1 or self.left==2):
+                self.move_left(increment)
+            if (self.up==0 or self.down==3) and (self.left==1 or self.right==2):
+                self.move_right(increment)
+            if (self.up==1 and self.right==3):
+                self.setY(self.getY()-increment)
+                self.setX(self.getX()-increment*2)
+                self.right=1
+                self.up=2
+                self.left=-1
+                self.down=-2
+            if (self.up==1 and self.left==3):
+                self.setY(self.getY()-increment)
+                self.setX(self.getX()+increment*2)
+                self.right=-1
+                self.up=2
+                self.left=1
+                self.down=-2
             self.setY(self.getY()-increment)
             self.up+=1
             self.down-=1
@@ -45,6 +107,24 @@ class Pion:
 
     def move_down(self,increment):
         if self.down<3:
+            if(self.up==0 or self.up==3) and (self.left==1 or self.right==2):
+                self.move_right(increment)
+            if(self.up==0 or self.up==3) and (self.right==1 or self.left==2):
+                self.move_left(increment)
+            if(self.right==3 and self.down==1):
+                self.setY(self.getY()+increment)
+                self.setX(self.getX()-increment*2)
+                self.right=1
+                self.up=-2
+                self.left=-1
+                self.down=2
+            if(self.left==3 and self.down==1):
+                self.setY(self.getY()+increment)
+                self.setX(self.getX()+increment*2)
+                self.left=1
+                self.up=-2
+                self.right=-1
+                self.down=2
             self.setY(self.getY()+increment)
             self.down+=1
             self.up-=1

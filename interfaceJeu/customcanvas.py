@@ -6,6 +6,7 @@ from entity.voleur import Voleur
 class CustomCanvas(Canvas):
     def __init__(self,fenetre,width,height):
         super().__init__(fenetre,width=width,height=height)
+        self.voleur_id=None
 
     def setVoleur(self,voleur:Voleur):
         self._voleur=voleur
@@ -14,6 +15,8 @@ class CustomCanvas(Canvas):
         return self._voleur
 
     def draw_voleur(self):
+        if self.voleur_id!=None:
+            self.delete(self.voleur_id)
         voleurRayon = 8
         voleur_x1 = self.getVoleur().getX() - voleurRayon
         voleur_y1 = self.getVoleur().getY() - voleurRayon
@@ -25,21 +28,20 @@ class CustomCanvas(Canvas):
         self.bind_all("<KeyPress>", self.key_pressed)
 
     def right_voleur(self):
-        if self.getVoleur().move_right(1):
-            self.move(self.voleur_id,47,0)
+        if self.getVoleur().move_right(47):
+            self.draw_voleur()
 
     def left_voleur(self):
-        if self.getVoleur().move_left(1):
-            self.move(self.voleur_id,-47,0)
+        if self.getVoleur().move_left(47):
+            self.draw_voleur()
 
     def up_voleur(self):
-        if self.getVoleur().move_up(1):
-            self.move(self.voleur_id,0,-47)
+        if self.getVoleur().move_up(47):
+            self.draw_voleur()
             
     def down_voleur(self):
-        if self.getVoleur().move_down(1):
-            self.move(self.voleur_id,0,47)
-
+        if self.getVoleur().move_down(47):
+            self.draw_voleur()
 
     def key_pressed(self, event):
         if event.keysym == 'Up':

@@ -35,7 +35,7 @@ class IA:
                 new_police = Pion(move.getX(), move.getY(), move, False)
                 new_ls_police.remove(police)
                 new_ls_police.append(new_police)
-                terrain = Terrain(lsPts, True, voleur, new_ls_police)
+                terrain = Terrain(lsPts, False, voleur, new_ls_police)
                 # Utiliser l'algorithme Minimax pour évaluer ce mouvement
                 evaluation= IA.minimax(terrain, depth=3, isMax=True)
                 

@@ -58,12 +58,12 @@ class Terrain:
         
     def nextMove(self):
         ls_terrain=[]
-        if self.getIsVoleurTurn():
+        if not self.getIsVoleurTurn():
             pt=self.getVoleur().getPoint()
             voisins=pt.getValidNeighbors(self.getPolices(),self.getVoleur())
             for voisin in voisins:
                 new_voleur=Pion(voisin.getX(),voisin.getY(),voisin,True)
-                ls_terrain.append(Terrain(self.getLsPoints(),False,new_voleur,self.getPolices()))
+                ls_terrain.append(Terrain(self.getLsPoints(),True,new_voleur,self.getPolices()))
             
         else :
             for police in self.getPolices():
@@ -75,7 +75,7 @@ class Terrain:
                 for voisin in voisins:
                     new_police=Pion(voisin.getX(),voisin.getY(),voisin,False)
                     new_ls.append(new_police)
-                    ls_terrain.append(Terrain(self.getLsPoints(),True,self.getVoleur(),new_ls.copy()))
+                    ls_terrain.append(Terrain(self.getLsPoints(),False,self.getVoleur(),new_ls.copy()))
                     new_ls.pop()
         return ls_terrain
     

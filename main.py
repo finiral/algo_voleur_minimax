@@ -53,12 +53,12 @@ def main():
         
     
     # Affichage des voisins pour chaque point
-    for pt in ls_pt:
+    """ for pt in ls_pt:
         print("Point ({}, {}), Score: {}".format(pt.getX(), pt.getY(), pt.getScore()))
         print("Neighbors:")
         for neighbor in pt.getNeighbors():
             print("  ({}, {})".format(neighbor.getX(), neighbor.getY()))
-        print()
+        print() """
 
     #initialisation voleur
     vol=Pion(0,0,ls_pt[0],True)

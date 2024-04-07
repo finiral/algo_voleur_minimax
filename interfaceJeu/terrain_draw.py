@@ -15,6 +15,7 @@ class TerrainDraw(tk.Canvas):
     def __init__(self, terrain, **kwargs):
         super().__init__(**kwargs)
         self.terrain=terrain
+        self.voleurCompteur=0
         self.bind_all("<KeyPress>", self.key_pressed)
 
     
@@ -73,20 +74,38 @@ class TerrainDraw(tk.Canvas):
             polices=self.getTerrain().getPolices()
             if self.getTerrain().getVoleur().getPoint().valid_move(move,polices,voleur) is not None:
                 self.getTerrain().getVoleur().move(self.getTerrain().getVoleur().getPoint().valid_move(move,polices,voleur))
-                
                 self.draw_terrain()  # Redraw the board after the movement
-                #tour des polices
-                self.launchPoliceTurn()
+            #add voleur compteur
+                self.voleurCompteur=self.voleurCompteur+1
+                self.getTerrain().setIsVoleurTurn(False)
+                if not self.isVoleurWin() or not self.isPoliceWin():
+                    #tour des polices
+                    self.launchPoliceTurn()
+                elif self.isVoleurWin():
+                    tk.showinfo("Game WON", "Congrats!")
+                elif self.isPoliceWin():
+                    tk.showinfo("Game Over", "The game has ended!")
     
     def launchPoliceTurn(self):
-        """ minimax_terrain=IA.minimax(self.getTerrain(),4,True)[2]
-        new_terrain=Terrain(self.getTerrain().getLsPoints(),True,self.getTerrain().getVoleur(),minimax_terrain.getPolices())
-        self.setTerrain(new_terrain)
-        self.draw_terrain() """
-        #self.getTerrain().setIsVoleurTurn(True)
+
         police,move=IA.chooseMove(self.getTerrain().getLsPoints(),self.getTerrain().getPolices(),self.getTerrain().getVoleur())
         for p in self.getTerrain().getPolices():
-            if police.getPoint().same_coordinates(p):
+            if police.getPoint().same_coordinates(p.getPoint()):
                 p.move(move)
                 break
+        self.getTerrain().setIsVoleurTurn(True)
         self.draw_terrain()
+        if self.isVoleurWin() or self.isPoliceWin():
+            tk.messagebox.showinfo("Game Over", "The game has ended!")
+
+    
+    def isVoleurWin(self):
+        if self.getTerrain().isVoleurWin():
+            return True
+        return False
+    
+    def isPoliceWin(self):
+        if self.getTerrain().isPoliceWin() or self.voleurCompteur>=30:
+            self.getTerrain().setIsVoleurTurn(False)
+            return True
+        return False

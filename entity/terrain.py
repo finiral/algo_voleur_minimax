@@ -41,17 +41,17 @@ class Terrain:
         else:
             voleur_point = self.getVoleur().getPoint()
             
-            # Calcule la distance entre le voleur et le point (0, 0)
+            # distance entre le voleur et le point (0, 0)
             distance_to_center = (sqrt(voleur_point.getX()**2 + voleur_point.getY()**2))
             
            
-            # Calcule la somme des distances entre chaque policier et le voleur
+            # somme des distances entre chaque policier et le voleur
             sum_distance=0
             for police in self.getPolices():
                 sum_distance+=sqrt((police.getPoint().getX() - voleur_point.getX())**2 + (police.getPoint().getY() - voleur_point.getY())**2)
 
             
-            # Soustrait le nombre de mouvements valides du voleur
+            # nombre de mouvements valides du voleur
             moves = len(self.getVoleur().getPoint().getValidNeighbors(self.getPolices(), self.getVoleur()))
 
             return moves+sum_distance-distance_to_center
